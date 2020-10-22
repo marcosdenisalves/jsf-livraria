@@ -13,6 +13,7 @@ import javax.faces.validator.ValidatorException;
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.util.RedirectView;
 
 @ManagedBean
 @ViewScoped
@@ -66,9 +67,9 @@ public class LivroBean implements Serializable {
 		this.livro = new Livro();
 	}
 	
-	public String formAutor() {
+	public RedirectView formAutor() {
 		System.out.println("Chamada o formulário do Autor");
-		return "autor?faces-redirect=true";
+		return new RedirectView("autor");
 	}
 
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component,
