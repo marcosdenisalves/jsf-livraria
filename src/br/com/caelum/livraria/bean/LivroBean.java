@@ -61,10 +61,24 @@ public class LivroBean implements Serializable {
 		if (livro.getAutores().isEmpty()) {
 			throw new RuntimeException("Livro deve ter pelo menos um Autor.");
 		}
-
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		
+		if (livro.getId() == null) {
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
+		} else {
+			new DAO<Livro>(Livro.class).atualiza(this.livro);
+		}
 
 		this.livro = new Livro();
+	}
+	
+	public void carregar(Livro livro) {
+		System.out.println("carregando");
+		this.livro = livro;
+	}
+	
+	public void remover(Livro livro) {
+		System.out.println("Removendo livro...");
+		new DAO<Livro>(Livro.class).remove(livro);
 	}
 	
 	public RedirectView formAutor() {
