@@ -4,28 +4,50 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<ui:composition template="_template.xhtml">
-		<ui:define name="titulo">
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">
 			Novo Autor
 		</ui:define>
-		<ui:define name="conteudo">
-			<h:form id="autor">
-				<fieldset>
-					<legend>Dados do Autor</legend>
-					<h:panelGrid columns="3">
-						<h:outputLabel value="Nome:" for="nome" />
-						<h:inputText id="nome" value="#{autorBean.autor.nome}"
-							required="true">
-							<f:validateLength minimum="5" />
-						</h:inputText>
-						<h:message for="nome" />
-						<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
-					</h:panelGrid>
-				</fieldset>
-			</h:form>
-		</ui:define>
-		<ui:define name="texto">
+	<ui:define name="conteudo">
+		<h:form id="autor">
+			<fieldset>
+				<legend>Dados do Autor</legend>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Nome:" for="nome" />
+					<h:inputText id="nome" value="#{autorBean.autor.nome}"
+						required="true">
+						<f:validateLength minimum="5" />
+					</h:inputText>
+					<h:message for="nome" />
+					<h:commandButton value="Gravar" action="#{autorBean.gravar}">
+						<f:ajax execute="@form"
+							render="@form :formTabelaAutores:tabelaAutores" />
+					</h:commandButton>
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+		<h:form id="formTabelaAutores">
+			<h:dataTable value="#{autorBean.autores}" var="autor"
+				id="tabelaAutores">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{autor.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Alterar</f:facet>
+					<h:commandLink value="alterar" >
+						<f:setPropertyActionListener target="#{autorBean.autor}" value="#{autor}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Remover</f:facet>
+					<h:commandLink value="remover" action="#{autorBean.remover(autor)}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="texto">
 			Cadastro de Autores
 		</ui:define>
-	</ui:composition>
+</ui:composition>
 </html>
