@@ -9,8 +9,7 @@
 
 	<f:metadata>
 		<f:viewParam name="autorId" value="#{autorBean.autorId}" />
-		<f:viewAction action="#{autorBean.carregarAutorPelaId}"
-			if="#{param.autorId != null}" />
+		<f:viewAction action="#{autorBean.carregarAutorPelaId}" if="#{param.autorId != null}" />
 	</f:metadata>
 
 	<ui:define name="titulo">

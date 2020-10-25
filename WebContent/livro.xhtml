@@ -6,6 +6,12 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="_template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="livroId" value="#{livroBean.livroId}" />
+		<f:viewAction action="#{livroBean.carregarLivroPelaId}" if="#{param.livroId != null}" />
+	</f:metadata>
+
 	<ui:define name="titulo">
 				Novo Livro
 			</ui:define>
@@ -59,7 +65,7 @@
 					action="#{livroBean.formAutor}" immediate="true" />
 
 				<h:dataTable value="#{livroBean.autoresDoLivro}" var="autor"
-					id="tabelaAutores">
+					id="tabelaAutores" if="{livroBean.autoresDoLivro != null}">
 					<h:column>
 						<h:outputText value="#{autor.nome}" />
 					</h:column>
