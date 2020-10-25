@@ -2,6 +2,7 @@ package br.com.caelum.livraria.bean;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -28,14 +29,18 @@ public class LoginBean implements Serializable {
 	
 	public RedirectView efetuarLogin() {
 		System.out.println("fazendo login do usuario " + this.usuario.getEmail());
+
+		FacesContext context = FacesContext.getCurrentInstance();
 		boolean existe = new UsuarioDao().existe(this.usuario);
-		if (existe == true) {
-			FacesContext context = FacesContext.getCurrentInstance();
+		if (existe) {
 			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return new RedirectView("livro");
 		}
 		
-		return null;
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		context.addMessage(null, new FacesMessage("Usuário não encontrado"));
+		
+		return new RedirectView("login");
 	}
 	
 	public RedirectView deslogar() {

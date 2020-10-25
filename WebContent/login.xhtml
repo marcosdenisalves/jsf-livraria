@@ -10,11 +10,16 @@
 	<ui:define name="titulo">
 			Login
 		</ui:define>
+		
 	<ui:define name="conteudo">
+	
+		<h:messages globalOnly="true"/>
+	
 		<h:form id="login">
 			<fieldset>
 				<legend>Login</legend>
 				<h:panelGrid columns="3">
+				
 					<h:outputLabel value="Email:" for="email" />
 					<h:inputText id="email" value="#{loginBean.usuario.email}" required="true">
 						<f:passThroughAttribute name="type" value="email" />
