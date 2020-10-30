@@ -71,26 +71,25 @@
 				update="@form :formTabelaLivros:tabelaLivros" />
 		</h:form>
 		
-		<br/>
 		<h:form id="formTabelaLivros">
 			<p:dataTable value="#{livroBean.livros}" var="livro"
-				id="tabelaLivros">
-				<p:column>
-					<f:facet name="header">Título</f:facet>
+				id="tabelaLivros" paginator="true" rows="8">
+				<f:facet name="header">Livros</f:facet>
+				<p:column headerText="Título" sortBy="#{livro.titulo}" filterBy="#{livro.titulo}" filterMatchMode="startsWith">
 					<h:outputText value="#{livro.titulo}" />
 				</p:column>
-				<p:column>
+				<p:column sortBy="{livro.isbn}" filterBy="##{livro.isbn}" filterMatchMode="startsWith">
 					<f:facet name="header">ISBN</f:facet>
 					<h:outputText value="#{livro.isbn}" />
 				</p:column>
-				<p:column>
+				<p:column sortBy="#{livro.preco}" filterBy="##{livro.preco}" filterMatchMode="startsWith">
 					<f:facet name="header">Preço</f:facet>
 					<h:outputText value="#{livro.preco}">
 						<f:convertNumber type="currency" pattern="R$ #0.00"
 							currencySymbol="R$" locale="pt_BR" />
 					</h:outputText>
 				</p:column>
-				<p:column>
+				<p:column sortBy="#{livro.dataLancamento.time}" filterBy="#{livro.dataLancamento.time}" filterMatchMode="startsWith">
 					<f:facet name="header">Data</f:facet>
 					<h:outputText value="#{livro.dataLancamento.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy"
