@@ -89,5 +89,14 @@ public class DAO<T> {
 		em.close();
 		return lista;
 	}
+	
+	public int quantidadeDeElementos() {
+        EntityManager em = new JPAUtil().getEntityManager();
+        long result = (Long) em.createQuery("select count(n) from " + classe.getSimpleName() + " n")
+                .getSingleResult();
+        em.close();
+
+        return (int) result;
+    }
 
 }
