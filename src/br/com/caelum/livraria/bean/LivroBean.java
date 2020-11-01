@@ -1,6 +1,8 @@
 package br.com.caelum.livraria.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,6 +32,7 @@ public class LivroBean implements Serializable {
 	private Integer autorId;
 
 	private List<Livro> livros;
+	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação");
 
 	public Integer getAutorId() {
 		return autorId;
@@ -61,6 +64,10 @@ public class LivroBean implements Serializable {
 			this.livros = dao.listaTodos();
 		}
 		return livros;
+	}
+
+	public List<String> getGeneros() {
+		return generos;
 	}
 
 	public List<Autor> getAutores() {
