@@ -9,7 +9,22 @@
 <h:head />
 	<h:body>
 		<div id="cabecalho">
+			<h:panelGrid columns="2">
 			<h:graphicImage library="img" name="logo.png" />
+				<h:form rendered="#{usuarioLogado != null}">
+		            <p:themeSwitcher id="basic" style="width:165px" value="#{temaBean.tema}">
+		                <f:selectItem itemLabel="Aristo" itemValue="aristo" />
+		                <f:selectItem itemLabel="Vader" itemValue="vader" />
+		                <f:selectItem itemLabel="Excite-Bike" itemValue="excite-bike" />
+		                <f:selectItem itemLabel="Eggplant" itemValue="eggplant" />
+		                <f:selectItem itemLabel="Le-Frog" itemValue="le-frog" />
+		                <f:selectItem itemLabel="Blitzer" itemValue="blitzer" />
+		                <f:selectItem itemLabel="Dark-Hiver" itemValue="dark-hive" />
+		                <f:ajax />
+		            </p:themeSwitcher>
+		        </h:form>
+			</h:panelGrid>
+			
 			<p:growl id="messages" showDetail="true" autoUpdate="true"/>
 			
 			<h:form rendered="#{usuarioLogado != null}">
