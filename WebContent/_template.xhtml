@@ -10,11 +10,17 @@
 	<h:body>
 		<div id="cabecalho">
 			<h:graphicImage library="img" name="logo.png" />
+			<p:growl id="messages" showDetail="true" autoUpdate="true"/>
 			
 			<h:form rendered="#{usuarioLogado != null}">
-				<p:commandLink value="Logout" action="#{loginBean.deslogar}"/>
+			    <p:menuButton value="Menu">
+			        <p:menuitem value="Livros" action="livro" icon="pi pi-refresh"/>
+			        <p:menuitem value="Autores" action="autor" icon="pi pi-times"/>
+			        <p:separator />
+			        <p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="pi pi-home"/>
+			    </p:menuButton>
 			</h:form>
-			
+
 			<h1>
 				<ui:insert name="titulo"></ui:insert>
 			</h1>
