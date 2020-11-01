@@ -12,7 +12,7 @@ public class LivroDataModel extends LazyDataModel<Livro> {
 
 	private static final long serialVersionUID = 1L;
 	
-	private DAO<Livro> dao;
+	private DAO<Livro> dao = new DAO<Livro>(Livro.class);
 	
 	public LivroDataModel() {
 		super.setRowCount(dao.quantidadeDeElementos());
@@ -20,7 +20,8 @@ public class LivroDataModel extends LazyDataModel<Livro> {
 	
 	@Override
 	public List<Livro> load(int inicio, int quantidade, String campoOrdenacao, SortOrder sentidoOrdenacao, Map<String, Object> filtros) {
-	    return dao.listaTodosPaginada(inicio, quantidade);
+	    String titulo = (String) filtros.get("titulo");
+		return dao.listaTodosPaginada(inicio, quantidade);
 	}
 
 }
