@@ -14,10 +14,10 @@
 			
 			<h:form rendered="#{usuarioLogado != null}">
 			    <p:menuButton value="Menu">
-			        <p:menuitem value="Livros" action="livro" icon="pi pi-refresh"/>
-			        <p:menuitem value="Autores" action="autor" icon="pi pi-times"/>
+			        <p:menuitem value="Livros" action="livro" icon="fa fa-fw fa-edit"/>
+			        <p:menuitem value="Autores" action="autor" icon="fa fa-fw fa-users"/>
 			        <p:separator />
-			        <p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="pi pi-home"/>
+			        <p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="fa fa-fw fa-sign-out"/>
 			    </p:menuButton>
 			</h:form>
 
