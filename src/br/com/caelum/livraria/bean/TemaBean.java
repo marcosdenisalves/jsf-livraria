@@ -7,7 +7,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class TemaBean {
 	
-	private String tema = "aristo";
+	private String tema = "midnight";
 
 	public String getTema() {
 		return tema;
