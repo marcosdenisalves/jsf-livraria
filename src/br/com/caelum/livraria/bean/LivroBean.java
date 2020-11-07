@@ -25,19 +25,21 @@ import br.com.caelum.livraria.util.RedirectView;
 public class LivroBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private LivroDataModel livroDataModel = new LivroDataModel();
 	private Livro livro = new Livro();
 
 	private Integer livroId;
 	private Integer autorId;
 
 	private List<Livro> livros;
-	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação");
+	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação", "Aventura", "Comédia");
 	
 	@Inject
 	LivroDao livroDao;
 	@Inject
 	AutorDao autorDao;
+	
+	@Inject
+	private LivroDataModel livroDataModel;
 
 	public Integer getAutorId() {
 		return autorId;
