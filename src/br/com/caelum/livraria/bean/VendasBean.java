@@ -1,9 +1,7 @@
 package br.com.caelum.livraria.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -15,8 +13,7 @@ import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 
-import br.com.caelum.livraria.dao.LivroDao;
-import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.dao.VendaDao;
 import br.com.caelum.livraria.modelo.Venda;
 
 @Named
@@ -27,7 +24,7 @@ public class VendasBean implements Serializable {
 	private LineChartModel model;
 
 	@Inject
-	LivroDao livroDao;
+	VendaDao vendaDao;
 	
 	public LineChartModel getVendasModel() {
 
@@ -39,43 +36,21 @@ public class VendasBean implements Serializable {
 		model.getAxes().put(AxisType.X, new CategoryAxis("Vendas"));
 		Axis yAxis = model.getAxis(AxisType.Y);
 		yAxis.setMin(0);
-		yAxis.setMax(500);
+		yAxis.setMax(1500);
 		
-		ChartSeries vendaSerie2020 = new ChartSeries();
-		vendaSerie2020.setLabel("Vendas 2020");
+		ChartSeries vendaSerie = new ChartSeries();
+		vendaSerie.setLabel("Vendas 2020");
 
-		List<Venda> vendas = getVendas(1234);
+		List<Venda> vendas = getVendas();
 		for (Venda venda : vendas) {
-			vendaSerie2020.set(venda.getLivro().getTitulo(), venda.getQuantidade());
+			vendaSerie.set(venda.getLivro().getTitulo(), venda.getQuantidade());
 		}
 
-		ChartSeries vendaSerie2015 = new ChartSeries();
-		vendaSerie2015.setLabel("Vendas 2015");
-		
-		vendas = getVendas(4321);
-		for (Venda venda : vendas) {
-			vendaSerie2015.set(venda.getLivro().getTitulo(), venda.getQuantidade());
-		}
-		
-		model.addSeries(vendaSerie2015);
-		model.addSeries(vendaSerie2020);
-
+		model.addSeries(vendaSerie);
 		return model;
 	}
 
-	public List<Venda> getVendas(long valor) {
-
-		List<Livro> livros = livroDao.listaTodos();
-		List<Venda> vendas = new ArrayList<Venda>();
-
-		Random random = new Random(valor);
-
-		for (Livro livro : livros) {
-
-			Integer quantidade = random.nextInt(500);
-
-			vendas.add(new Venda(livro, quantidade));
-		}
-		return vendas;
+	public List<Venda> getVendas() {
+		return vendaDao.listaTodos();
 	}
 }
