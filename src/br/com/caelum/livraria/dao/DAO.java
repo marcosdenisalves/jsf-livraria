@@ -40,7 +40,6 @@ public class DAO<T> implements Serializable {
 		em.remove(em.merge(t));
 
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public void atualiza(T t) {
@@ -49,7 +48,6 @@ public class DAO<T> implements Serializable {
 		em.merge(t);
 
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public List<T> listaTodos() {
@@ -58,20 +56,17 @@ public class DAO<T> implements Serializable {
 
 		List<T> lista = em.createQuery(query).getResultList();
 
-		em.close();
 		return lista;
 	}
 
 	public T buscaPorId(Integer id) {
 		T instancia = em.find(classe, id);
-		em.close();
 		return instancia;
 	}
 
 	public int contaTodos() {
 		long result = (Long) em.createQuery("select count(n) from livro n")
 				.getSingleResult();
-		em.close();
 
 		return (int) result;
 	}
@@ -85,14 +80,12 @@ public class DAO<T> implements Serializable {
 
 	    List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 
-	    em.close();
 	    return lista;
 	}
 	
 	public int quantidadeDeElementos() {
         long result = (Long) em.createQuery("select count(n) from " + classe.getSimpleName() + " n")
                 .getSingleResult();
-        em.close();
 
         return (int) result;
     }
