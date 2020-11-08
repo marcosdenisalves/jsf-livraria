@@ -17,7 +17,7 @@
 				Novo Livro
 			</ui:define>
 	<ui:define name="conteudo">
-		<h:form>
+		<h:form id="formLivro">
 			<p:messages id="messages" />
 			<p:fieldset legend="Dados do Livro">
 				<p:panelGrid columns="2">
@@ -105,16 +105,15 @@
 						<f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR" />
 					</h:outputText>
 				</p:column>
-				<p:column>
-					<f:facet name="header">Alterar</f:facet>
-					<h:commandLink value="alterar" >
-						<f:setPropertyActionListener target="#{livroBean.livro}" value="#{livro}" />
-					</h:commandLink>
+				
+				<p:column headerText="Alterar">
+					<p:commandButton update=":formLivro" process="@this" value="alterar" actionListener="#{livroBean.carregar(livro)}" icon="fa fa-fw fa-edit" />
 				</p:column>
-				<p:column>
-					<f:facet name="header">Remover</f:facet>
-					<h:commandLink value="remover" action="#{livroBean.remover(livro)}" />
+				
+				<p:column headerText="Remover">
+					<p:commandButton update="@form" process="@this" value="remover" actionListener="#{livroBean.remover(livro)}" icon="fa fa-fw fa-remove" />
 				</p:column>
+				
 			</p:dataTable>
 		</h:form>
 	</ui:define>
