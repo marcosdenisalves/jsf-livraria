@@ -32,12 +32,12 @@ public class LivroBean implements Serializable {
 
 	private List<Livro> livros;
 	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação", "Aventura", "Comédia");
-	
+
 	@Inject
 	LivroDao livroDao;
 	@Inject
 	AutorDao autorDao;
-	
+
 	@Inject
 	private LivroDataModel livroDataModel;
 
@@ -66,7 +66,7 @@ public class LivroBean implements Serializable {
 	}
 
 	public List<Livro> getLivros() {
-		if(this.livros == null) {
+		if (this.livros == null) {
 			this.livros = livroDao.listaTodos();
 		}
 		return livros;
@@ -91,10 +91,15 @@ public class LivroBean implements Serializable {
 	public List<Autor> getAutoresDoLivro() {
 		return this.getLivro().getAutores();
 	}
+	
+	public void carregar(Livro livro) {
+		this.livro = livroDao.buscaPorId(livro.getId());
+	}
+
 	public void carregarLivroPelaId() {
 		this.livro = livroDao.buscaPorId(livroId);
 	}
-	
+
 	public void gravarAutor() {
 		Autor autor = autorDao.buscaPorId(this.autorId);
 		this.getLivro().adicionaAutor(autor);
@@ -111,63 +116,58 @@ public class LivroBean implements Serializable {
 
 		this.setLivro(new Livro());
 	}
-	
+
 	public void remover(Livro livro) {
-		System.out.println("Removendo livro...");
 		livroDao.remove(livro);
 	}
-	
+
 	public void removerAutorDoLivro(Autor autor) {
-		System.out.println("Removendo autor do livro...");
 		this.getLivro().removeAutor(autor);
 	}
-	
+
 	public RedirectView formAutor() {
-		System.out.println("Chamada o formulário do Autor");
 		return new RedirectView("autor");
 	}
 
-	public void comecaComDigitoUm(FacesContext fc, UIComponent component,
-			Object value) throws ValidatorException {
+	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
 
 		String valor = value.toString();
 		if (!valor.startsWith("1")) {
-			throw new ValidatorException(new FacesMessage(
-					"ISBN deveria começar com 1"));
+			throw new ValidatorException(new FacesMessage("ISBN deveria começar com 1"));
 		}
 
 	}
-	
+
 	public boolean precoEhMenor(Object valorColuna, Object filtroDigitado, Locale locale) { // java.util.Locale
 
-        //tirando espaços do filtro
-        String textoDigitado = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
+		// tirando espaços do filtro
+		String textoDigitado = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
 
-        System.out.println("Filtrando pelo " + textoDigitado + ", Valor do elemento: " + valorColuna);
+		System.out.println("Filtrando pelo " + textoDigitado + ", Valor do elemento: " + valorColuna);
 
-        // o filtro é nulo ou vazio?
-        if (textoDigitado == null || textoDigitado.equals("")) {
-            return true;
-        }
+		// o filtro é nulo ou vazio?
+		if (textoDigitado == null || textoDigitado.equals("")) {
+			return true;
+		}
 
-        // elemento da tabela é nulo?
-        if (valorColuna == null) {
-            return false;
-        }
+		// elemento da tabela é nulo?
+		if (valorColuna == null) {
+			return false;
+		}
 
-        try {
-            // fazendo o parsing do filtro para converter para Double
-            Double precoDigitado = Double.valueOf(textoDigitado);
-            Double precoColuna = (Double) valorColuna;
+		try {
+			// fazendo o parsing do filtro para converter para Double
+			Double precoDigitado = Double.valueOf(textoDigitado);
+			Double precoColuna = (Double) valorColuna;
 
-            // comparando os valores, compareTo devolve um valor negativo se o value é menor do que o filtro
-            return precoColuna.compareTo(precoDigitado) < 0;
+			// comparando os valores, compareTo devolve um valor negativo se o value é menor
+			// do que o filtro
+			return precoColuna.compareTo(precoDigitado) < 0;
 
-        } catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 
-            // usuario nao digitou um numero
-            return false;
-        }
+			// usuario nao digitou um numero
+			return false;
+		}
 	}
 }
-
