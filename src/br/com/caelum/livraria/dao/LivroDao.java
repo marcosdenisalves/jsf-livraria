@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.tx.Log;
 
 public class LivroDao implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +23,7 @@ public class LivroDao implements Serializable {
 		this.dao = new DAO<Livro>(this.manager, Livro.class);
 	}
 
+	@Log
 	public void adiciona(Livro t) {
 		dao.adiciona(t);
 	}
@@ -34,6 +36,7 @@ public class LivroDao implements Serializable {
 		dao.atualiza(t);
 	}
 
+	@Log
 	public List<Livro> listaTodos() {
 		return dao.listaTodos();
 	}
